@@ -25,20 +25,20 @@
       <!-- <div style="width: 1000px;height:1000px"> -->
       <div id="city" :style="{ transform: `scale(${Style().scale})`, top: Style().top + 'rem' }" :class="[mapShow ? 'showMap' : 'showMapNot']"></div>
       <!-- </div> -->
-      <div class="citywraper">
+      <div :class="{ chanzhe: isShow1 }" class="citywraper">
         <div class="cityName">{{ cityName || '浙江' }}</div>
         <div class="quyu">
           <img :src="imagesURL" alt="" class="imgPosition" @click="showProvince" />
           <div class="Dot"></div>
-          <div class="xian1 xian1Animation"></div>
-          <div class="xian2 xian2Animation"></div>
-          <div class="xian3 xian3Animation"></div>
-          <div class="xian4 xian4Animation"></div>
+          <div :class="{ xian1Animation: isShow }" class="xian1 noshow"></div>
+          <div :class="{ xian2Animation: isShow }" class="xian2 noshow"></div>
+          <div :class="{ xian3Animation: isShow }" class="xian3 noshow"></div>
+          <div :class="{ xian4Animation: isShow }" class="xian4 noshow"></div>
         </div>
       </div>
       <div class="tableWrap">
         <!-- 表1 -->
-        <div class="pie-box">
+        <div :class="{ isopacity: isShow7 }" class="pie-box">
           <div class="header-tab">
             <!-- <div :class="{ topstyle: isShow }" class="top " @click="changeHeightL">会员数</div>
           <div class="top" :class="{ topstyle: isShow }">订单数</div>
@@ -62,7 +62,7 @@
           <div class="pie-bg3">6,827,100,815</div>
         </div>
         <!-- 表2 -->
-        <div class="pie-box2">
+        <div :class="{ isopacity: isShow7 }" class="pie-box2">
           <div class="header-tab">
             <div
               v-for="(item, index) in piedata2"
@@ -79,7 +79,7 @@
           </div>
         </div>
         <!-- 表3 -->
-        <div class="histogram-week">
+        <div :class="{ isopacity: isShow7 }" class="histogram-week">
           <div class="header-tab">
             <div
               v-for="(item, index) in bardata"
@@ -97,22 +97,22 @@
         </div>
         <!-- VIP -->
         <div class="vip-box">
-          <div class="o-yuan"></div>
-          <div class="c-yuan"></div>
-          <div class="n-yuan"></div>
+          <div :class="{ show: isShow4 }" class="o-yuan noshow"></div>
+          <div :class="{ show: isShow4 }" class="c-yuan noshow"></div>
+          <div :class="{ show: isShow4 }" class="n-yuan noshow"></div>
           <!--图标-->
           <div class="tb-logo">
-            <img src="../../assets/images/people.png" alt="" />
+            <img :class="{ show: isShow3 }" src="../../assets/images/people.png" alt="" class="noshow" />
           </div>
           <!--线条-->
-          <img src="../../assets/images/position-tiao.png" alt="" class="cz-png " />
+          <img :class="{ widthto99: isShow2 }" src="../../assets/images/position-tiao.png" alt="" class="cz-png " />
 
-          <img src="../../assets/images/xian.png" alt="" class="p-xian " />
+          <img :class="{ widthto98: isShow2 }" src="../../assets/images/xian.png" alt="" class="p-xian " />
 
           <!--会员数-->
-          <div id="vip" class="vip-number">6,827,100,815</div>
+          <div id="vip" :class="{ show: isShow6 }" class="vip-number">6827100815</div>
 
-          <div class="vip-tit">
+          <div :class="{ textani: isShow5 }" class="vip-tit">
             <p class="p1">会员数</p>
             <p>Members</p>
           </div>
@@ -120,22 +120,22 @@
         <!--消费订单-->
         <div class="consume-box">
           <!--三圆动画-->
-          <div class="o-yuan"></div>
-          <div class="c-yuan"></div>
-          <div class="n-yuan"></div>
+          <div :class="{ show: isShow4 }" class="o-yuan noshow"></div>
+          <div :class="{ show: isShow4 }" class="c-yuan noshow"></div>
+          <div :class="{ show: isShow4 }" class="n-yuan noshow"></div>
           <!--图标-->
           <div class="tb-logo">
-            <img src="../../assets/images/shop.png" alt="" />
+            <img :class="{ show: isShow3 }" src="../../assets/images/shop.png" alt="" class="noshow" />
           </div>
           <!--线条-->
-          <img src="../../assets/images/position-tiao.png" alt="" class="cz-png" />
+          <img :class="{ widthto99: isShow2 }" src="../../assets/images/position-tiao.png" alt="" class="cz-png" />
 
-          <img src="../../assets/images/xian.png" alt="" class="p-xian" />
+          <img :class="{ widthto98: isShow2 }" src="../../assets/images/xian.png" alt="" class="p-xian" />
 
           <!--会员数-->
-          <div id="consume-box" class="vip-number"></div>
+          <div id="consume" :class="{ show: isShow6 }" class="vip-number">5665157496</div>
 
-          <div class="vip-tit">
+          <div :class="{ textani: isShow5 }" class="vip-tit">
             <p class="p1">消费订单</p>
             <p>Consumer orders</p>
           </div>
@@ -143,24 +143,24 @@
         <!--订单交易额-->
         <div class="Order-volume">
           <!--三圆动画-->
-          <div class="bo-yuan"></div>
-          <div class="bc-yuan"></div>
-          <div class="bn-yuan">
+          <div :class="{ show: isShow4 }" class="bo-yuan noshow"></div>
+          <div :class="{ show: isShow4 }" class="bc-yuan noshow"></div>
+          <div :class="{ show: isShow4 }" class="bn-yuan noshow">
             <div class="quchu"></div>
           </div>
           <!--图标-->
           <div class="tb-logo">
-            <img src="../../assets/images/money.png" alt="" />
+            <img :class="{ show: isShow3 }" src="../../assets/images/money.png" alt="" class="noshow" />
           </div>
           <!--线条-->
-          <img src="../../assets/images/position-tiao-b.png" alt="" class="cz-png" />
+          <img :class="{ widthto99: isShow2 }" src="../../assets/images/position-tiao-b.png" alt="" class="cz-png" />
 
-          <img src="../../assets/images/xian-b.png" alt="" class="p-xian" />
+          <img :class="{ widthto98: isShow2 }" src="../../assets/images/xian-b.png" alt="" class="p-xian" />
 
           <!--会员数-->
-          <div id="Order-volume" class="vip-number">4,387,662</div>
+          <div id="Order-volume" :class="{ show: isShow6 }" class="vip-number">4387662</div>
 
-          <div class="vip-tit">
+          <div :class="{ textani1: isShow5 }" class="vip-tit">
             <p class="p1">订单交易额</p>
             <p>Order volume</p>
           </div>
@@ -168,22 +168,22 @@
         <!--地区收益-->
         <div class="region-box">
           <!--三圆动画-->
-          <div class="bo-yuan"></div>
-          <div class="bc-yuan"></div>
-          <div class="bn-yuan"></div>
+          <div :class="{ show: isShow4 }" class="bo-yuan noshow"></div>
+          <div :class="{ show: isShow4 }" class="bc-yuan noshow"></div>
+          <div :class="{ show: isShow4 }" class="bn-yuan noshow"></div>
           <!--图标-->
           <div class="tb-logo">
-            <img src="../../assets/images/purse.png" alt="" />
+            <img :class="{ show: isShow3 }" src="../../assets/images/purse.png" alt="" class="noshow" />
           </div>
           <!--线条-->
-          <img src="../../assets/images/position-tiao-b.png" alt="" class="cz-png" />
+          <img :class="{ widthto99: isShow2 }" src="../../assets/images/position-tiao-b.png" alt="" class="cz-png" />
 
-          <img src="../../assets/images/xian-b.png" alt="" class="p-xian" />
+          <img :class="{ widthto98: isShow2 }" src="../../assets/images/xian-b.png" alt="" class="p-xian" />
 
           <!--会员数-->
-          <div id="region" class="vip-number">14,587,348</div>
+          <div id="region" :class="{ show: isShow6 }" class="vip-number">4387662</div>
 
-          <div class="vip-tit">
+          <div :class="{ textani1: isShow5 }" class="vip-tit">
             <p class="p1">地区收益</p>
             <p>Our income</p>
           </div>
@@ -198,6 +198,7 @@
 import '../../assets/js/jquery.min.js';
 import '../../assets/js/circle-progress';
 import '../../assets/js/wy_rem';
+import { CountUp } from '../../assets/js/countUp';
 // import axios from 'axios';
 import imagesURL from '../../assets/images/province1.png';
 import guangdong from '../../assets/images/guangdong.png';
@@ -209,6 +210,14 @@ export default {
   name: 'Nihao',
   data() {
     return {
+      isShow7: false,
+      isShow6: false,
+      isShow5: false,
+      isShow3: false,
+      isShow4: false,
+      isShow2: false,
+      isShow1: false,
+      isShow: false,
       mapShow: false,
       FlyLine: false,
       Drilldown: false,
@@ -307,6 +316,9 @@ export default {
     this.getTimer();
   },
   mounted() {
+    that.$nextTick(() => {
+      // that.numberAnimation();
+    });
     that.restoreActiveInstance = that.setActiveInstance({
       name: '全国',
       key: 'china',
@@ -335,6 +347,8 @@ export default {
       that.myChart = that.$echarts.init(that.dom);
       that.runMapOption('浙江省', 'china');
       that.myChart.on('click', async params => {
+        this.clearTimer();
+        this.setAnimationTimer();
         this.params = params;
         this.cityName = params.name;
         if (that.mapList.length > 3) {
@@ -359,6 +373,100 @@ export default {
   },
   methods: {
     // 召哥 弄的 time 5月27日 开始
+    // 清除动画定时器
+    clearTimer() {
+      let arr = ['isShow', 'isShow1', 'isShow2', 'isShow3', 'isShow4', 'isShow5', 'isShow6', 'isShow7'];
+      arr.forEach(item => {
+        that[item] = false;
+      });
+
+      // this.isShow = false;
+      // this.isShow1 = false;
+      // this.isShow2 = false;
+      // this.isShow3 = false;
+      // this.isShow4 = false;
+      // this.isShow5 = false;
+      // this.isShow6 = false;
+      // this.isShow7 = false;
+      clearTimeout(this.timer1);
+      this.timer1 = null;
+      clearTimeout(this.timer2);
+      this.timer2 = null;
+      clearTimeout(this.timer3);
+      this.timer3 = null;
+      clearTimeout(this.timer4);
+      this.timer4 = null;
+      clearTimeout(this.timer5);
+      this.timer5 = null;
+      clearTimeout(this.timer6);
+      this.timer6 = null;
+      clearTimeout(this.timer7);
+      this.timer7 = null;
+    },
+    setAnimationTimer() {
+      //控制小地图的显示+右侧图标显示
+      this.timer1 = setTimeout(() => {
+        this.isShow1 = true;
+        this.isShow7 = true;
+      }, 1000);
+      //控制四条线
+      this.timer2 = setTimeout(() => {
+        this.isShow = true;
+      }, 2000);
+      //控制头像
+      this.timer3 = setTimeout(() => {
+        this.isShow3 = true;
+      }, 3000);
+      //控制画圆
+      this.timer4 = setTimeout(() => {
+        this.isShow4 = true;
+        this.demo();
+      }, 4000);
+      //控制上下两张图片
+      this.timer5 = setTimeout(() => {
+        this.isShow2 = true;
+      }, 5000);
+      // 文字动画
+      this.timer6 = setTimeout(() => {
+        this.isShow5 = true;
+      }, 6000);
+      //数字动画
+      this.timer7 = setTimeout(() => {
+        this.isShow6 = true;
+        this.numberAnimation();
+      }, 6000);
+    },
+    numberAnimation() {
+      var options = {
+        useEasing: true,
+        useGrouping: true,
+        separator: ',',
+        decimal: '.',
+      };
+
+      //目标= html元素id,输入,svg文本元素,或之前选定元素的var /输入计数发生的地方
+      //startVal =你想开始的价值
+      //endVal =你想要到达的价值
+      //小数=(可选)的小数位数号码,默认为0
+      //时间=(可选)持续时间以秒为单位,默认2
+      //选择=(看演示,可选)格式/宽松的选择对象
+      debugger;
+      var vip = new CountUp('vip', 0, 6827100815, 0, 1.5, options);
+      var consume = new CountUp('consume', 0, 5665157496, 0, 1.5, options);
+      var OrderVolume = new CountUp('Order-volume', 0, 4387662, 0, 1.5, options);
+      var region = new CountUp('region', 0, 14587348, 0, 1.5, options);
+      var pienumeber = new CountUp('pie-bg3', 0, 6827100815, 0, 1.5, options);
+
+      if (!vip.error) {
+        vip.start();
+        consume.start();
+        OrderVolume.start();
+        region.start();
+        pienumeber.start();
+      } else {
+        console.error(vip.error);
+      }
+    },
     getTimer() {
       this.year = this.$moment().format('YYYY');
       this.MM = this.$moment().format('MM');
@@ -552,6 +660,7 @@ export default {
     showProvince() {
       this.Drilldown = true;
       if (this.FlyLine && this.Drilldown) {
+        that.clearTimer();
         this.Drilldown = false;
         this.mapShow = true;
         setTimeout(() => {
@@ -981,6 +1090,7 @@ export default {
       that.mapList = NewArray;
       // that.myChart.clear();
       let cityName;
+      that.clearTimer();
       that.mapShow = true;
       setTimeout(() => {
         cityName = that.mapList[that.mapList.length - 1].name;
@@ -1100,6 +1210,41 @@ export default {
 };
 </script>
 <style lang="less" scoped>
+.isopacity {
+  opacity: 1 !important;
+}
+.textani {
+  transition: 2s all;
+  right: 1.33rem !important;
+  opacity: 1 !important;
+}
+.textani1 {
+  transition: 2s all;
+  right: 1.03rem !important;
+  opacity: 1 !important;
+}
+.widthto100 {
+  transition: 2s all;
+  width: 0.26rem !important;
+}
+.widthto99 {
+  transition: 2s all;
+  width: 1.2rem !important;
+}
+.widthto98 {
+  transition: 2s all;
+  width: 2.8rem !important;
+}
+.widthto97 {
+  transition: 2s all;
+  width: 0.26rem !important;
+}
+.noshow {
+  display: none;
+}
+.show {
+  display: block !important;
+}
 .nihaox {
   .tdsx {
     margin: 140px 0 0 10px;
@@ -1145,15 +1290,19 @@ export default {
 }
 .xian1Animation {
   animation: xian1 1s linear 0s 1;
+  display: block !important;
 }
 .xian2Animation {
   animation: xian2 1s linear 0s 1;
+  display: block !important;
 }
 .xian3Animation {
   animation: xian3 1s linear 0s 1;
+  display: block !important;
 }
 .xian4Animation {
   animation: xian4 1s linear 0s 1;
+  display: block !important;
 }
 .tob {
   margin-top: 3.62rem;
@@ -1174,6 +1323,8 @@ export default {
     display: flex;
     flex-direction: column;
     .pie-box {
+      transition: 2s all;
+      opacity: 0;
       z-index: 16;
       width: 2.8rem;
       height: 3.42rem;
@@ -1246,6 +1397,8 @@ export default {
       }
     }
     .pie-box2 {
+      transition: 2s all;
+      opacity: 0;
       z-index: 16;
       margin-top: 3.55rem;
       width: 2.8rem;
@@ -1294,6 +1447,8 @@ export default {
       }
     }
     .histogram-week {
+      transition: 2s all;
+      opacity: 0;
       z-index: 16;
       margin-top: 6.55rem;
       width: 2.8rem;
@@ -1415,7 +1570,7 @@ export default {
         /*background: red;*/
       }
       .cz-png {
-        width: 1.2rem;
+        width: 0rem;
         height: 0.06rem;
         /*display: block;*/
         position: absolute;
@@ -1424,7 +1579,7 @@ export default {
         /*animation: vip-cz 1s linear 0s 1;*/
       }
       .p-xian {
-        width: 2.8rem;
+        width: 0rem;
         height: 0.24rem;
         /*display: block;*/
         position: absolute;
@@ -1433,6 +1588,7 @@ export default {
         /*animation: vip-xian 1s linear 0s 1;*/
       }
       .vip-number {
+        display: none;
         font-size: 0.19rem;
         color: #f3c800;
         position: absolute;
@@ -1441,9 +1597,11 @@ export default {
         right: 1.55rem;
       }
       .vip-tit {
+        transition: 2s all;
+        opacity: 0;
         position: absolute;
         top: 0.13rem;
-        right: 1.33rem;
+        right: 2.33rem;
         p {
           font-size: 0.15rem;
           color: #007387;
@@ -1532,7 +1690,7 @@ export default {
         /*background: red;*/
       }
       .cz-png {
-        width: 1.2rem;
+        width: 0rem;
         height: 0.06rem;
         /*display: block;*/
         position: absolute;
@@ -1541,7 +1699,7 @@ export default {
         /*animation: vip-cz 1s linear 0s 1;*/
       }
       .p-xian {
-        width: 2.8rem;
+        width: 0rem;
         height: 0.24rem;
         /*display: block;*/
         position: absolute;
@@ -1550,6 +1708,7 @@ export default {
         /*animation: vip-xian 1s linear 0s 1;*/
       }
       .vip-number {
+        display: none;
         font-size: 0.19rem;
         color: #f3c800;
         position: absolute;
@@ -1558,9 +1717,11 @@ export default {
         right: 1.55rem;
       }
       .vip-tit {
+        transition: 2s all;
+        opacity: 0;
         position: absolute;
         top: 0.13rem;
-        right: 1.33rem;
+        right: 2.33rem;
         p {
           font-size: 0.15rem;
           color: #007387;
@@ -1613,24 +1774,25 @@ export default {
         /*background: red;*/
       }
       .cz-png {
-        width: 1.2rem;
+        width: 0rem;
         height: 0.06rem;
         /*display: block;*/
         position: absolute;
         top: 0.04rem;
-        right: 1.85rem;
+        left: 0.46rem;
         /*animation: vip-cz 1s linear 0s 1;*/
       }
       .p-xian {
-        width: 2.8rem;
+        width: 0rem;
         height: 0.24rem;
         /*display: block;*/
         position: absolute;
         bottom: 0;
-        right: 0.28rem;
+        left: 0.46rem;
         /*animation: vip-xian 1s linear 0s 1;*/
       }
       .vip-number {
+        display: none;
         font-size: 0.19rem;
         color: #f3c800;
         position: absolute;
@@ -1639,9 +1801,11 @@ export default {
         right: 0.8rem;
       }
       .vip-tit {
+        transition: 2s all;
+        opacity: 0;
         position: absolute;
         top: 0.13rem;
-        right: 1.03rem;
+        right: 2.03rem;
         p {
           font-size: 0.15rem;
           color: #007387;
@@ -1694,24 +1858,25 @@ export default {
         /*background: red;*/
       }
       .cz-png {
-        width: 1.2rem;
+        width: 0rem;
         height: 0.06rem;
         /*display: block;*/
         position: absolute;
         top: 0.04rem;
-        right: 1.85rem;
+        left: 0.46rem;
         /*animation: vip-cz 1s linear 0s 1;*/
       }
       .p-xian {
-        width: 2.8rem;
+        width: 0rem;
         height: 0.24rem;
         /*display: block;*/
         position: absolute;
         bottom: 0;
-        right: 0.28rem;
+        left: 0.46rem;
         /*animation: vip-xian 1s linear 0s 1;*/
       }
       .vip-number {
+        display: none;
         font-size: 0.19rem;
         color: #f3c800;
         position: absolute;
@@ -1720,9 +1885,11 @@ export default {
         right: 0.8rem;
       }
       .vip-tit {
+        transition: 2s all;
+        opacity: 0;
         position: absolute;
         top: 0.13rem;
-        right: 1.03rem;
+        right: 2.03rem;
         p {
           font-size: 0.15rem;
           color: #007387;
@@ -1798,7 +1965,17 @@ export default {
       color: #007285;
     }
   }
+
+  .chanzhe {
+    transition: 3s all;
+    opacity: 1 !important;
+  }
+  .xian1change {
+    width: 2.26rem;
+    transform: rotate(-50deg);
+  }
   .citywraper {
+    opacity: 0;
     position: relative;
     top: 42%;
     left: 48.5%;
