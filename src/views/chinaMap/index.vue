@@ -379,29 +379,11 @@ export default {
       arr.forEach(item => {
         that[item] = false;
       });
-
-      // this.isShow = false;
-      // this.isShow1 = false;
-      // this.isShow2 = false;
-      // this.isShow3 = false;
-      // this.isShow4 = false;
-      // this.isShow5 = false;
-      // this.isShow6 = false;
-      // this.isShow7 = false;
-      clearTimeout(this.timer1);
-      this.timer1 = null;
-      clearTimeout(this.timer2);
-      this.timer2 = null;
-      clearTimeout(this.timer3);
-      this.timer3 = null;
-      clearTimeout(this.timer4);
-      this.timer4 = null;
-      clearTimeout(this.timer5);
-      this.timer5 = null;
-      clearTimeout(this.timer6);
-      this.timer6 = null;
-      clearTimeout(this.timer7);
-      this.timer7 = null;
+      let arr1 = ['timer1', 'timer2', 'timer3', 'timer4', 'timer5', 'timer6', 'timer7'];
+      arr1.map(item => {
+        that[item] = null;
+        clearTimeout(that[item]);
+      });
     },
     setAnimationTimer() {
       //控制小地图的显示+右侧图标显示
