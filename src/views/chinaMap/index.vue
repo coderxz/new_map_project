@@ -1,10 +1,3 @@
-<!--
- * @version:
- * @Author: LHF
- * @Date: 2021-05-22 10:03:58
- * @LastEditors: LHF
- * @LastEditTime: 2021-05-31 15:19:34
--->
 <template>
   <div>
     <div style="display: flex">
@@ -20,13 +13,14 @@
           <div class="rz">{{ MM.indexOf('0') === -1 ? MM : MM.slice(1, 2) }}月{{ DD }}日</div>
           <div class="year">{{ year || '2021' }}</div>
         </div>
-        <div class="city">{{ cityName || '浙江' }}</div>
+        <div class="city">{{ cityName || '浙江省' }}</div>
       </div>
       <!-- <div style="width: 1000px;height:1000px"> -->
       <div id="city" :style="{ transform: `scale(${Style().scale})`, top: Style().top + 'rem' }" :class="[mapShow ? 'showMap' : 'showMapNot']"></div>
       <!-- </div> -->
       <div :class="{ chanzhe: isShow1 }" class="citywraper">
-        <div class="cityName">{{ cityName || '浙江' }}</div>
+        <div :class="[isShow8 ? 'mask' : 'mask1']"></div>
+        <div class="cityName">{{ cityName || '浙江省' }}</div>
         <div class="quyu">
           <img :src="imagesURL" alt="" class="imgPosition" @click="showProvince" />
           <div class="Dot"></div>
@@ -210,6 +204,7 @@ export default {
   name: 'Nihao',
   data() {
     return {
+      isShow8: false,
       isShow7: false,
       isShow6: false,
       isShow5: false,
@@ -272,7 +267,6 @@ export default {
       isHighlight1: 0,
       isHighlight2: 0,
       isHighlight3: 0,
-
       mapList: [
         {
           name: '全国',
@@ -316,9 +310,6 @@ export default {
     this.getTimer();
   },
   mounted() {
-    that.$nextTick(() => {
-      // that.numberAnimation();
-    });
     that.restoreActiveInstance = that.setActiveInstance({
       name: '全国',
       key: 'china',
@@ -347,27 +338,29 @@ export default {
       that.myChart = that.$echarts.init(that.dom);
       that.runMapOption('浙江省', 'china');
       that.myChart.on('click', async params => {
-        this.clearTimer();
-        this.setAnimationTimer();
-        this.params = params;
-        this.cityName = params.name;
-        if (that.mapList.length > 3) {
-          this.FlyLine = false;
-          return;
+        if (params.seriesType === 'map') {
+          this.isShow8 = true;
+          this.clearTimer();
+          this.setAnimationTimer();
+          this.params = params;
+          this.cityName = params.name;
+          if (that.mapList.length > 3) {
+            this.FlyLine = false;
+            return;
+          }
+          this.FlyLine = true;
+          if (params.name === '广东省') {
+            this.imagesURL = guangdong;
+          }
+          event.stopPropagation();
+          //
+          that.runMapOption(params.data.name, []);
+          this.option1.series[0].data[0].name = this.cityName;
+          //
+          this.myChart1.setOption(this.option1);
+          this.createMychart2();
+          this.createMychart3();
         }
-        this.FlyLine = true;
-        if (params.name === '广东省') {
-          this.imagesURL = guangdong;
-        }
-        event.stopPropagation();
-        //
-        that.runMapOption(params.data.name, []);
-        this.option1.series[0].data[0].name = this.cityName;
-
-        //
-        this.myChart1.setOption(this.option1);
-        this.createMychart2();
-        this.createMychart3();
       });
     });
   },
@@ -379,44 +372,64 @@ export default {
       arr.forEach(item => {
         that[item] = false;
       });
-      let arr1 = ['timer1', 'timer2', 'timer3', 'timer4', 'timer5', 'timer6', 'timer7'];
-      arr1.map(item => {
-        that[item] = null;
-        clearTimeout(that[item]);
-      });
+      // this.isShow = false;
+      // this.isShow1 = false;
+      // this.isShow2 = false;
+      // this.isShow3 = false;
+      // this.isShow4 = false;
+      // this.isShow5 = false;
+      // this.isShow6 = false;
+      // this.isShow7 = false;
+      clearTimeout(this.timer1);
+      this.timer1 = null;
+      clearTimeout(this.timer2);
+      this.timer2 = null;
+      clearTimeout(this.timer3);
+      this.timer3 = null;
+      clearTimeout(this.timer4);
+      this.timer4 = null;
+      clearTimeout(this.timer5);
+      this.timer5 = null;
+      clearTimeout(this.timer6);
+      this.timer6 = null;
+      clearTimeout(this.timer7);
+      this.timer7 = null;
     },
     setAnimationTimer() {
       //控制小地图的显示+右侧图标显示
       this.timer1 = setTimeout(() => {
         this.isShow1 = true;
         this.isShow7 = true;
-      }, 1000);
+      }, 2000);
       //控制四条线
       this.timer2 = setTimeout(() => {
         this.isShow = true;
-      }, 2000);
+      }, 3000);
       //控制头像
       this.timer3 = setTimeout(() => {
         this.isShow3 = true;
-      }, 3000);
+      }, 4000);
       //控制画圆
       this.timer4 = setTimeout(() => {
         this.isShow4 = true;
         this.demo();
-      }, 4000);
+      }, 5000);
       //控制上下两张图片
       this.timer5 = setTimeout(() => {
         this.isShow2 = true;
-      }, 5000);
+      }, 6000);
       // 文字动画
       this.timer6 = setTimeout(() => {
+        setTimeout(() => {
+          this.isShow8 = false;
+        }, 1500);
         this.isShow5 = true;
-      }, 6000);
+      }, 7000);
       //数字动画
       this.timer7 = setTimeout(() => {
         this.isShow6 = true;
         this.numberAnimation();
-      }, 6000);
+      }, 7000);
     },
     numberAnimation() {
       var options = {
@@ -425,20 +438,18 @@ export default {
         separator: ',',
         decimal: '.',
       };
-
       //目标= html元素id,输入,svg文本元素,或之前选定元素的var /输入计数发生的地方
       //startVal =你想开始的价值
       //endVal =你想要到达的价值
       //小数=(可选)的小数位数号码,默认为0
       //时间=(可选)持续时间以秒为单位,默认2
       //选择=(看演示,可选)格式/宽松的选择对象
-      debugger;
+      // debugger;
       var vip = new CountUp('vip', 0, 6827100815, 0, 1.5, options);
       var consume = new CountUp('consume', 0, 5665157496, 0, 1.5, options);
       var OrderVolume = new CountUp('Order-volume', 0, 4387662, 0, 1.5, options);
       var region = new CountUp('region', 0, 14587348, 0, 1.5, options);
       var pienumeber = new CountUp('pie-bg3', 0, 6827100815, 0, 1.5, options);
-
       if (!vip.error) {
         vip.start();
         consume.start();
@@ -619,7 +630,6 @@ export default {
         xAxis: {
           type: 'category',
           data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-
           axisTick: {
             show: false,
           },
@@ -641,6 +651,10 @@ export default {
     },
     showProvince() {
       this.Drilldown = true;
+      if (that.mapList.length >= 3) {
+        this.FlyLine = false;
+        return;
+      }
       if (this.FlyLine && this.Drilldown) {
         that.clearTimer();
         this.Drilldown = false;
@@ -692,7 +706,6 @@ export default {
           gradient: ['#00ddf7'],
         },
       });
-
       $('.bc-yuan').circleProgress({
         value: 1,
         size: 65,
@@ -703,7 +716,6 @@ export default {
           gradient: ['#00ddf7'],
         },
       });
-
       $('.bn-yuan').circleProgress({
         value: 1,
         size: 50,
@@ -720,22 +732,18 @@ export default {
       switch (index) {
         case 0:
           ////console.log('会员');
-
           this.createMychart1('会员');
           break;
         case 1:
           ////console.log('订单');
-
           this.createMychart1('订单');
           break;
         case 2:
           ////console.log('订单额');
-
           this.createMychart1('订单额');
           break;
         case 3:
           ////console.log('收益');
-
           this.createMychart1('收益');
           break;
       }
@@ -802,7 +810,6 @@ export default {
       this.option3 && this.myChart3.setOption(this.option3, true);
     },
     //结束 召哥 TIME 5/27
-
     //BY JY TIME 2021-5/27
     randomConfiguration(proviceName, nextArray, mapData, cityCode, geoCoordsMap) {
       let series = [];
@@ -826,7 +833,6 @@ export default {
                   },
                 },
               },
-
               itemStyle: {
                 normal: {
                   borderColor: '#0b4a67', //线的颜色
@@ -948,19 +954,18 @@ export default {
       }
       MapData.data = arr;
       if (activeInstance.name === proviceName) {
-        let radnow = Math.round(Math.random() * arr.length - 1);
+        let radnow = Math.round(Math.random() * Math.abs(arr.length - 1));
         const rowName = arr.filter((item, index) => index === radnow);
         proviceName = rowName[0].properties.name;
+        that.cityName = proviceName;
       }
       const { cityPick: shuzuN = [], geoCoordsMap: geoCoordsMaps = {} } = that.cityListCofig(proviceName, arr);
-
       if (MapData.data.length > 0) {
         that.geoJson.features = MapData.data;
       } else if (MapData.data.length === 0) {
         that.geoJson.features = that.geoJson.features.filter(item => item.properties.adcode == adcode);
         if (that.geoJson.features.length === 0) return;
       }
-
       const mapData = that.getMapData();
       //EBD
       that.$echarts.registerMap(cityCode, that.geoJson);
@@ -996,7 +1001,6 @@ export default {
               name: '南海诸岛',
               itemStyle: {
                 areaColor: 'rgba(0, 10, 52, 1)',
-
                 borderColor: 'rgba(0, 10, 52, 1)',
                 normal: {
                   opacity: 0,
@@ -1080,6 +1084,7 @@ export default {
         let pick = { name: cityName, key: that.mapList[that.mapList.length - 1].key };
         that.setActiveInstance(pick)(pick);
         that.mapShow = false;
+        that.cityName = cityName === '全国' ? '浙江省' : cityName;
         that.runMapOption(cityName === '全国' ? '浙江省' : cityName, zhixiao === 'china' ? 'china' : [zhixiao]);
       }, 1800);
     },
@@ -1146,8 +1151,10 @@ export default {
         }
       }
       provincesTextPush = Array.from([...newMap.values()]);
+      let nums = 0;
+      provincesTextPush.length >= 4 ? (nums = 4) : (nums = provincesTextPush.length);
       //console.log(provincesTextPush, 'xxx');
-      for (let index = 0; index < 4; index++) {
+      for (let index = 0; index < nums; index++) {
         shuzu.push(
           { name: proviceName },
           {
@@ -1177,7 +1184,6 @@ export default {
         }
       );
       shuzuN.push(shuzu);
-
       return shuzuN;
     },
     geoCoordsMapRandom(cityPick) {
@@ -1317,7 +1323,6 @@ export default {
       .header-tab {
         width: 100%;
         display: flex;
-
         .top {
           font-size: 0.16rem;
           text-align: center;
@@ -1947,7 +1952,6 @@ export default {
       color: #007285;
     }
   }
-
   .chanzhe {
     transition: 3s all;
     opacity: 1 !important;
@@ -1957,6 +1961,19 @@ export default {
     transform: rotate(-50deg);
   }
   .citywraper {
+    .mask {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+    .mask1 {
+      display: none;
+      width: 100%;
+      height: 100%;
+      // background-color: hotpink;
+    }
     opacity: 0;
     position: relative;
     top: 42%;
@@ -1995,7 +2012,6 @@ export default {
           left: 1.54rem;
           z-index: 2;
         }
-
         &::after {
           content: '';
           position: absolute;
@@ -2032,7 +2048,6 @@ export default {
         top: 0.24rem;
         transform: rotate(-50deg);
         opacity: 1;
-
         // width: 10px;
         // border-top: 3px solid rgba(243, 200, 0, 0.5);
         // height: 0px;
@@ -2042,7 +2057,6 @@ export default {
         // -webkit-transform: rotate(-50deg);
         // transform: rotate(-50deg);
         // opacity: 1;
-
         // width: 3.44rem;
         // height: 0.048rem;
         // background: rgba(243, 200, 0, 0.5);
@@ -2093,13 +2107,11 @@ export default {
     }
   }
 }
-
 .map-wrap .province .quyu img {
   height: 100%;
   display: block;
   margin: 0 auto;
 }
-
 .map-wrap #city {
   width: 1000px;
   height: 1000px;

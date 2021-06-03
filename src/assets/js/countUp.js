@@ -22,7 +22,6 @@
   // options = optional object of options (see below)
 
   var CountUp = function(target, startVal, endVal, decimals, duration, options) {
-    debugger;
     var self = this;
     self.version = function() {
       return '1.9.3';
@@ -259,6 +258,5 @@
     // format startVal on initialization
     if (self.initialize()) self.printValue(self.startVal);
   };
-
   return CountUp;
 });
