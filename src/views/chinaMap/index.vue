@@ -22,7 +22,7 @@
         <div :class="[isShow8 ? 'mask' : 'mask1']"></div>
         <div class="cityName">{{ cityName || '浙江省' }}</div>
         <div class="quyu">
-          <img :src="imagesURL" alt="" class="imgPosition" @click="showProvince" />
+          <img :src="imagesURL" alt="" class="imgPosition" @click="nihao" />
           <div class="Dot"></div>
           <div :class="{ xian1Animation: isShow }" class="xian1 noshow"></div>
           <div :class="{ xian2Animation: isShow }" class="xian2 noshow"></div>
@@ -200,6 +200,18 @@ let that;
 // var extendOptions;
 let activeInstance = null; //记录你点击上层是啥 东西 方便操作
 let prevActiveInstance = null;
+function debounce(func, wait = 1000) {
+  //可以放入项目中的公共方法中进行调用（鹅只是省事）
+  let timeout;
+  return function(event) {
+    clearTimeout(timeout);
+    timeout = setTimeout(() => {
+      console.log('------');
+      console.log(timeout);
+      func.call(this, event);
+    }, wait);
+  };
+}
 export default {
   name: 'Nihao',
   data() {
@@ -342,6 +354,31 @@ export default {
           this.isShow8 = true;
           this.clearTimer();
           this.setAnimationTimer();
+          switch (params.name) {
+            case '内蒙古自治区':
+              params.name = '内蒙古';
+              break;
+            case '西藏自治区':
+              params.name = '西藏';
+              break;
+            case '新疆维吾尔自治区':
+              params.name = '新疆';
+              break;
+            case '宁夏回族自治区':
+              params.name = '宁夏';
+              break;
+            case '广西壮族自治区':
+              params.name = '广西';
+              break;
+            case '香港特别行政区':
+              params.name = '香港';
+              break;
+            case '澳门特别行政区':
+              params.name = '澳门';
+              break;
+            default:
+              break;
+          }
           this.params = params;
           this.cityName = params.name;
           if (that.mapList.length > 3) {
@@ -364,22 +401,20 @@ export default {
       });
     });
   },
+  beforeMount() {
+    // 设置防抖方法(周期内按下多次只会执行最后一次)
+    // 注意: 这里只需要传入函数就行了(不用写括号参数,写了就是执行)
+    this.debounceHandleValuesChange = debounce(this.showProvince, 300);
+  },
   methods: {
     // 召哥 弄的 time 5月27日 开始
     // 清除动画定时器
+
     clearTimer() {
       let arr = ['isShow', 'isShow1', 'isShow2', 'isShow3', 'isShow4', 'isShow5', 'isShow6', 'isShow7'];
       arr.forEach(item => {
         that[item] = false;
       });
-      // this.isShow = false;
-      // this.isShow1 = false;
-      // this.isShow2 = false;
-      // this.isShow3 = false;
-      // this.isShow4 = false;
-      // this.isShow5 = false;
-      // this.isShow6 = false;
-      // this.isShow7 = false;
       clearTimeout(this.timer1);
       this.timer1 = null;
       clearTimeout(this.timer2);
@@ -408,7 +443,7 @@ export default {
       //控制头像
       this.timer3 = setTimeout(() => {
         this.isShow3 = true;
-      }, 4000);
+      }, 4500);
       //控制画圆
       this.timer4 = setTimeout(() => {
         this.isShow4 = true;
@@ -649,6 +684,9 @@ export default {
         ],
       };
     },
+    nihao() {
+      that.debounceHandleValuesChange();
+    },
     showProvince() {
       this.Drilldown = true;
       if (that.mapList.length >= 3) {
@@ -822,23 +860,61 @@ export default {
               roam: false,
               label: {
                 normal: {
-                  show: false,
+                  formatter: p => {
+                    switch (p.name) {
+                      case '内蒙古自治区':
+                        p.name = '内蒙古';
+                        break;
+                      case '西藏自治区':
+                        p.name = '西藏';
+                        break;
+                      case '新疆维吾尔自治区':
+                        p.name = '新疆';
+                        break;
+                      case '宁夏回族自治区':
+                        p.name = '宁夏';
+                        break;
+                      case '广西壮族自治区':
+                        p.name = '广西';
+                        break;
+                      case '香港特别行政区':
+                        p.name = '香港';
+                        break;
+                      case '澳门特别行政区':
+                        p.name = '澳门';
+                        break;
+                      default:
+                        break;
+                    }
+                    return p.name;
+                  },
+                  //是否显示各省分
+                  show: true,
                   textStyle: {
-                    color: '#1DE9B6',
+                    //省标题的颜色
+                    color: '#fff',
+                    fontSize: '18',
                   },
                 },
                 emphasis: {
                   textStyle: {
-                    color: 'rgb(183,185,14)',
+                    //高亮下省标题的颜色
+                    color: '#f75a00',
+                    borderWidth: 2,
+                    shadowBlur: 18,
                   },
                 },
               },
               itemStyle: {
                 normal: {
-                  borderColor: '#0b4a67', //线的颜色
-                  borderWidth: 2,
+                  borderColor: '#53D9FF', //线的颜色
+                  // 线的宽度
+                  borderWidth: 1,
                   // 地图颜色
                   areaColor: '#051931',
+                  shadowColor: 'rgb(58,115,192)',
+                  // 阴影
+                  shadowBlur: 8,
                 },
                 emphasis: {
                   areaColor: 'rgb(46,229,206)',
@@ -872,27 +948,6 @@ export default {
               },
               data: that.convertData(item[1], geoCoordsMap),
             },
-            // {
-            //   type: 'lines',
-            //   zlevel: 2,
-            //   effect: {
-            //     show: true,
-            //     period: 4, //箭头指向速度，值越小速度越快
-            //     trailLength: 0.4, //特效尾迹长度[0,1]值越大，尾迹越长重
-            //     symbol: 'arrow', //箭头图标
-            //     symbolSize: 7, //图标大小
-            //   },
-            //   animation: false,
-            //   lineStyle: {
-            //     normal: {
-            //       color: '#1DE9B6',
-            //       width: 2, //线条宽度
-            //       opacity: 0.1, //尾迹线条透明度
-            //       curveness: 0.3, //尾迹线条曲直度
-            //     },
-            //   },
-            //   data: that.convertData(item[1], geoCoordsMap),
-            // },
             {
               type: 'effectScatter',
               coordinateSystem: 'geo',
@@ -906,11 +961,40 @@ export default {
               hoverAnimation: true,
               label: {
                 normal: {
-                  formatter: '{b}',
+                  formatter: p => {
+                    switch (p.name) {
+                      case '内蒙古自治区':
+                        p.name = '内蒙古';
+                        break;
+                      case '西藏自治区':
+                        p.name = '西藏';
+                        break;
+                      case '新疆维吾尔自治区':
+                        p.name = '新疆';
+                        break;
+                      case '宁夏回族自治区':
+                        p.name = '宁夏';
+                        break;
+                      case '广西壮族自治区':
+                        p.name = '广西';
+                        break;
+                      case '香港特别行政区':
+                        p.name = '香港';
+                        break;
+                      case '澳门特别行政区':
+                        p.name = '澳门';
+                        break;
+                      default:
+                        break;
+                    }
+                    return p.name;
+                  },
                   position: 'center',
                   offset: [10, 10],
+                  //省份标题颜色
                   color: '#47ccd4',
-                  show: true,
+                  //是否展示线的省份
+                  // show: true,
                 },
               },
               itemStyle: {
@@ -1235,6 +1319,7 @@ export default {
 }
 .nihaox {
   .tdsx {
+    cursor: pointer;
     margin: 140px 0 0 10px;
     font-size: 25px;
     color: #26cfff;
@@ -1953,8 +2038,9 @@ export default {
     }
   }
   .chanzhe {
-    transition: 3s all;
+    transition: 1s all;
     opacity: 1 !important;
+    transform: scale(1) !important;
   }
   .xian1change {
     width: 2.26rem;
@@ -1974,6 +2060,7 @@ export default {
       height: 100%;
       // background-color: hotpink;
     }
+    transform: scale(0);
     opacity: 0;
     position: relative;
     top: 42%;
