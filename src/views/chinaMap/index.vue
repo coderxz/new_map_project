@@ -2,7 +2,8 @@
   <div>
     <div style="display: flex">
       <div v-for="(item, index) in mapList" :key="index" class="nihaox" style="color:#fff;z-index: 1;position: relative;" @click="cityMapXs(item)">
-        <div class="tdsx">{{ item.name }}></div>
+        <span class="tdsx">{{ item.name }}</span>
+        <span v-show="index + 1 != mapList.length" class="icon">=></span>
       </div>
     </div>
     <div class="map-wrap">
@@ -206,8 +207,6 @@ function debounce(func, wait = 1000) {
   return function(event) {
     clearTimeout(timeout);
     timeout = setTimeout(() => {
-      console.log('------');
-      console.log(timeout);
       func.call(this, event);
     }, wait);
   };
@@ -1318,11 +1317,18 @@ export default {
   display: block !important;
 }
 .nihaox {
+  margin: 60px 15px;
   .tdsx {
     cursor: pointer;
-    margin: 140px 0 0 10px;
+    margin: 0;
     font-size: 25px;
     color: #26cfff;
+  }
+  .icon {
+    font-family: 'simsun';
+    font-size: 25px;
+    margin: 0 2px;
+    color: pink;
   }
 }
 @keyframes xian1 {
@@ -2029,12 +2035,17 @@ export default {
       }
     }
     .city {
+      width: 100px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
       font-size: 0.25rem;
       position: absolute;
       height: 0.8rem;
       line-height: 0.8rem;
       left: 3.2rem;
       color: #007285;
+      // background-color: pink;
     }
   }
   .chanzhe {
@@ -2070,9 +2081,14 @@ export default {
     background-image: url('../../assets/images/map-k.png');
     background-repeat: no-repeat;
     .cityName {
+      // background-color: pink;
+      width: 0.6rem;
+      text-overflow: ellipsis;
+      overflow: hidden;
+      white-space: nowrap;
       position: absolute;
       top: 0.09rem;
-      left: 0.25rem;
+      left: 0.2rem;
       color: #00d6f0;
       font-size: 0.15rem;
       font-weight: 600;
