@@ -3,7 +3,7 @@
     <div style="display: flex">
       <div v-for="(item, index) in mapList" :key="index" class="nihaox" style="color:#fff;z-index: 1;position: relative;" @click="cityMapXs(item)">
         <span class="tdsx">{{ item.name }}</span>
-        <span v-show="index + 1 != mapList.length" class="icon">=></span>
+        <span v-show="index + 1 !== mapList.length" class="icon">=></span>
       </div>
     </div>
     <div class="map-wrap">
@@ -16,9 +16,7 @@
         </div>
         <div class="city">{{ cityName || '浙江省' }}</div>
       </div>
-      <!-- <div style="width: 1000px;height:1000px"> -->
       <div id="city" :style="{ transform: `scale(${Style().scale})`, top: Style().top + 'rem' }" :class="[mapShow ? 'showMap' : 'showMapNot']"></div>
-      <!-- </div> -->
       <div :class="{ chanzhe: isShow1 }" class="citywraper">
         <div :class="[isShow8 ? 'mask' : 'mask1']"></div>
         <div class="cityName">{{ cityName || '浙江省' }}</div>
@@ -321,6 +319,17 @@ export default {
     this.getTimer();
   },
   mounted() {
+    // 输入：nums = [2,11,7,15], target = 9
+    // 输出：[0,1]
+    // 解释：因为 nums[0] + nums[1] == 9 ，返回 [0, 1] 。
+    // 输入：nums = [3,2,4], target = 6
+    // 输出：[1,2]
+    // 输入：nums = [3,3], target = 6
+    // 输出：[0,1]
+    //  [3,2,3]
+    //   6
+    var twoSum = function(nums, target) {};
+    console.log(twoSum([3, 2, 3], 6));
     that.restoreActiveInstance = that.setActiveInstance({
       name: '全国',
       key: 'china',
@@ -715,6 +724,7 @@ export default {
           gradient: ['#00ddf7'],
         },
       });
+      // eslint-disable-next-line no-undef
       $('.c-yuan').circleProgress({
         value: 1,
         size: 65,
@@ -1131,7 +1141,6 @@ export default {
       return mapData;
     },
     async cityMapXs(items) {
-      //////console.log
       let NewArray = [];
       let MapArray = [];
       let zhixiao = '';
@@ -1317,17 +1326,17 @@ export default {
   display: block !important;
 }
 .nihaox {
-  margin: 60px 15px;
+  margin: 0.6rem 0.15rem;
   .tdsx {
     cursor: pointer;
     margin: 0;
-    font-size: 25px;
+    font-size: 0.25rem;
     color: #26cfff;
   }
   .icon {
     font-family: 'simsun';
-    font-size: 25px;
-    margin: 0 2px;
+    font-size: 0.25rem;
+    margin: 0 0.02rem;
     color: pink;
   }
 }
@@ -1352,8 +1361,8 @@ export default {
 @keyframes xian3 {
   from {
     width: 0;
-    left: 151px;
-    top: 121px;
+    left: 1.51rem;
+    top: 1.21rem;
     transform: rotate(-35deg);
     opacity: 0;
   }
@@ -1361,8 +1370,8 @@ export default {
 @keyframes xian4 {
   from {
     width: 0;
-    left: 155px;
-    top: 125px;
+    left: 1.55rem;
+    top: 1.25rem;
     transform: rotate(-62deg);
     opacity: 0;
   }
@@ -1519,8 +1528,8 @@ export default {
         box-sizing: border-box;
         .circle2 {
           z-index: 999;
-          width: 278px;
-          height: 250px;
+          width: 2.78rem;
+          height: 2.5rem;
         }
       }
     }
@@ -1567,8 +1576,8 @@ export default {
         background-image: url('../../assets/images/map-piebg.png');
         box-sizing: border-box;
         .histogram {
-          width: 278px;
-          height: 197px;
+          width: 2.78rem;
+          height: 1.97rem;
         }
       }
     }
@@ -1583,54 +1592,19 @@ export default {
       position: absolute;
       // background-color: pink;
       .o-yuan {
-        // position: absolute;
-        // background-color: transparent;
-        // border: 5px solid #00ddf7;
-        // width: 50px;
-        // height: 50px;
-        // border-radius: 50%;
-        // right: -32px;
-        // top: 8px;
         position: absolute;
         right: -0.48rem;
         top: -0.3rem;
       }
       .c-yuan {
-        // position: absolute;
-        // background-color: transparent;
-        // border: 3px solid #00ddf7;
-        // width: 65px;
-        // height: 65px;
-        // border-radius: 50%;
-        // right: -39px;
-        // top: 0px;
         position: absolute;
         right: -0.36rem;
         top: -0.42rem;
       }
       .n-yuan {
-        // z-index: -2;
-        // position: absolute;
-        // background-color: transparent;
-        // border: 6px solid #00ddf7;
-        // width: 95px;
-        // height: 95px;
-        // border-radius: 50%;
-        // right: -54px;
-        // top: -16px;
         position: absolute;
         right: -0.29rem;
         top: -0.49rem;
-        // .quchu {
-        //   z-index: -1;
-        //   position: absolute;
-        //   top: 15px;
-        //   left: -27px;
-        //   width: 56px;
-        //   height: 59px;
-        //   background-color: #000b20;
-        //   transform: rotate(-45deg);
-        // }
       }
       .tb-logo {
         width: 0.26rem;
@@ -1703,54 +1677,19 @@ export default {
       position: absolute;
       // background-color: pink;
       .o-yuan {
-        // position: absolute;
-        // background-color: transparent;
-        // border: 5px solid #00ddf7;
-        // width: 50px;
-        // height: 50px;
-        // border-radius: 50%;
-        // right: -32px;
-        // top: 8px;
         position: absolute;
         right: -0.48rem;
         top: -0.3rem;
       }
       .c-yuan {
-        // position: absolute;
-        // background-color: transparent;
-        // border: 3px solid #00ddf7;
-        // width: 65px;
-        // height: 65px;
-        // border-radius: 50%;
-        // right: -39px;
-        // top: 0px;
         position: absolute;
         right: -0.36rem;
         top: -0.42rem;
       }
       .n-yuan {
-        // z-index: -2;
-        // position: absolute;
-        // background-color: transparent;
-        // border: 6px solid #00ddf7;
-        // width: 95px;
-        // height: 95px;
-        // border-radius: 50%;
-        // right: -54px;
-        // top: -16px;
         position: absolute;
         right: -0.29rem;
         top: -0.49rem;
-        // .quchu {
-        //   z-index: -1;
-        //   position: absolute;
-        //   top: 15px;
-        //   left: -27px;
-        //   width: 56px;
-        //   height: 59px;
-        //   background-color: #000b20;
-        //   transform: rotate(-45deg);
-        // }
       }
       .tb-logo {
         width: 0.26rem;
@@ -2035,7 +1974,7 @@ export default {
       }
     }
     .city {
-      width: 100px;
+      width: 1rem;
       white-space: nowrap;
       overflow: hidden;
       text-overflow: ellipsis;
@@ -2098,8 +2037,8 @@ export default {
       height: 100%;
       text-align: center;
       .imgPosition {
-        width: 124px;
-        height: 154px;
+        width: 1.24rem;
+        height: 1.54rem;
         z-index: 999999;
         margin-top: 0.4rem;
       }
@@ -2151,26 +2090,6 @@ export default {
         top: 0.24rem;
         transform: rotate(-50deg);
         opacity: 1;
-        // width: 10px;
-        // border-top: 3px solid rgba(243, 200, 0, 0.5);
-        // height: 0px;
-        // position: absolute;
-        // left: 168px;
-        // top: 109px;
-        // -webkit-transform: rotate(-50deg);
-        // transform: rotate(-50deg);
-        // opacity: 1;
-        // width: 3.44rem;
-        // height: 0.048rem;
-        // background: rgba(243, 200, 0, 0.5);
-        // position: absolute;
-        // left: 50%;
-        // top: 50%;
-        // margin-top: -1.504rem;
-        // margin-left: -0.72rem;
-        // transform: rotate(-55deg);
-        // opacity: 1;
-        /*animation: xian1 1s linear 0s;*/
       }
       .xian2 {
         width: 2.98rem;
@@ -2185,25 +2104,25 @@ export default {
       }
       .xian3 {
         z-index: 17;
-        width: 517px;
-        border-top: 3px solid rgba(243, 200, 0, 0.5);
+        width: 5.17rem;
+        border-top: 0.03rem solid rgba(243, 200, 0, 0.5);
         height: 0;
         // background-color: rgba(243, 200, 0, 0.5);
         position: absolute;
-        left: -313px;
-        top: 268px;
+        left: -3.13rem;
+        top: 2.68rem;
         transform: rotate(-35deg);
         opacity: 1;
       }
       .xian4 {
         z-index: 17;
-        width: 464px;
-        border-top: 3px solid rgba(243, 200, 0, 0.5);
+        width: 4.64rem;
+        border-top: 0.03rem solid rgba(243, 200, 0, 0.5);
         height: 0;
         // background-color: rgba(243, 200, 0, 0.5);
         position: absolute;
-        left: -173px;
-        top: 313px;
+        left: -1.73rem;
+        top: 3.13rem;
         transform: rotate(-62deg);
         opacity: 1;
       }
